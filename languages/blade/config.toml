@@ -1,6 +1,7 @@
 name = "Blade"
 extensions = [".blade.php"]
 scope = "text.html.php.blade"
+completion_query_characters = ["<", "x", "-"]
 
 [[snippets]]
 prefix = "@if"

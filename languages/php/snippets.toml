@@ -1,0 +1,7 @@
+[[snippets]]
+prefix = "colstring"
+body = "$table->string('${1:name}');"
+
+[[snippets]]
+prefix = "colint"
+body = "$table->integer('${1:column}');"
