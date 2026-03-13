@@ -1,7 +1,533 @@
+# ─── Migration Column Types ───────────────────────────────────────────────────
+
 [[snippets]]
 prefix = "colstring"
-body = "$table->string('${1:name}');"
+body = "$table->string('${1:column}', ${2:255});"
+
+[[snippets]]
+prefix = "coltext"
+body = "$table->text('${1:column}');"
+
+[[snippets]]
+prefix = "collongtext"
+body = "$table->longText('${1:column}');"
 
 [[snippets]]
 prefix = "colint"
 body = "$table->integer('${1:column}');"
+
+[[snippets]]
+prefix = "colbigint"
+body = "$table->bigInteger('${1:column}');"
+
+[[snippets]]
+prefix = "colunsigned"
+body = "$table->unsignedBigInteger('${1:column}');"
+
+[[snippets]]
+prefix = "colfloat"
+body = "$table->float('${1:column}', ${2:8}, ${3:2});"
+
+[[snippets]]
+prefix = "coldecimal"
+body = "$table->decimal('${1:column}', ${2:8}, ${3:2});"
+
+[[snippets]]
+prefix = "colbool"
+body = "$table->boolean('${1:column}');"
+
+[[snippets]]
+prefix = "coldate"
+body = "$table->date('${1:column}');"
+
+[[snippets]]
+prefix = "coldatetime"
+body = "$table->dateTime('${1:column}');"
+
+[[snippets]]
+prefix = "coltimestamp"
+body = "$table->timestamp('${1:column}')->nullable();"
+
+[[snippets]]
+prefix = "coltimestamps"
+body = "$table->timestamps();"
+
+[[snippets]]
+prefix = "colsoftdeletes"
+body = "$table->softDeletes();"
+
+[[snippets]]
+prefix = "coljson"
+body = "$table->json('${1:column}');"
+
+[[snippets]]
+prefix = "coljsonb"
+body = "$table->jsonb('${1:column}');"
+
+[[snippets]]
+prefix = "colenum"
+body = "$table->enum('${1:column}', [${2:'active', 'inactive'}]);"
+
+[[snippets]]
+prefix = "colforeign"
+body = "$table->foreignId('${1:user}_id')->constrained()->onDelete('cascade');"
+
+[[snippets]]
+prefix = "colnullable"
+body = "$table->string('${1:column}')->nullable();"
+
+[[snippets]]
+prefix = "coldefault"
+body = "$table->string('${1:column}')->default('${2:value}');"
+
+[[snippets]]
+prefix = "colunique"
+body = "$table->string('${1:column}')->unique();"
+
+[[snippets]]
+prefix = "colindex"
+body = "$table->index('${1:column}');"
+
+[[snippets]]
+prefix = "colid"
+body = "$table->id();"
+
+[[snippets]]
+prefix = "coluuid"
+body = "$table->uuid('${1:id}')->primary();"
+
+[[snippets]]
+prefix = "colip"
+body = "$table->ipAddress('${1:ip_address}');"
+
+[[snippets]]
+prefix = "colmac"
+body = "$table->macAddress('${1:mac_address}');"
+
+[[snippets]]
+prefix = "colmorph"
+body = "$table->morphs('${1:morphable}');"
+
+# ─── Migration Structure ──────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "migration"
+body = """<?php
+
+use Illuminate\\Database\\Migrations\\Migration;
+use Illuminate\\Database\\Schema\\Blueprint;
+use Illuminate\\Support\\Facades\\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('${1:table_name}', function (Blueprint \$table) {
+            \$table->id();
+            ${0}
+            \$table->timestamps();
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('${1:table_name}');
+    }
+};"""
+
+[[snippets]]
+prefix = "migalter"
+body = """Schema::table('${1:table_name}', function (Blueprint \$table) {
+    ${0}
+});"""
+
+# ─── Eloquent Model ───────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "model"
+body = """<?php
+
+namespace App\\Models;
+
+use Illuminate\\Database\\Eloquent\\Factories\\HasFactory;
+use Illuminate\\Database\\Eloquent\\Model;
+
+class ${1:ModelName} extends Model
+{
+    use HasFactory;
+
+    protected \$fillable = [
+        ${0}
+    ];
+}"""
+
+[[snippets]]
+prefix = "fillable"
+body = """protected \$fillable = [
+    '${1:column}',
+    ${0}
+];"""
+
+[[snippets]]
+prefix = "hidden"
+body = """protected \$hidden = [
+    '${1:column}',
+    ${0}
+];"""
+
+[[snippets]]
+prefix = "casts"
+body = """protected function casts(): array
+{
+    return [
+        '${1:column}' => '${2:string}',
+        ${0}
+    ];
+}"""
+
+[[snippets]]
+prefix = "scope"
+body = """public function scope${1:Name}(Builder \$query): Builder
+{
+    return \$query->${0};
+}"""
+
+[[snippets]]
+prefix = "hasone"
+body = """public function ${1:relation}(): HasOne
+{
+    return \$this->hasOne(${2:RelatedModel}::class);
+}"""
+
+[[snippets]]
+prefix = "hasmany"
+body = """public function ${1:relation}(): HasMany
+{
+    return \$this->hasMany(${2:RelatedModel}::class);
+}"""
+
+[[snippets]]
+prefix = "belongsto"
+body = """public function ${1:relation}(): BelongsTo
+{
+    return \$this->belongsTo(${2:RelatedModel}::class);
+}"""
+
+[[snippets]]
+prefix = "belongstomany"
+body = """public function ${1:relation}(): BelongsToMany
+{
+    return \$this->belongsToMany(${2:RelatedModel}::class);
+}"""
+
+[[snippets]]
+prefix = "morphto"
+body = """public function ${1:morphable}(): MorphTo
+{
+    return \$this->morphTo();
+}"""
+
+[[snippets]]
+prefix = "morphmany"
+body = """public function ${1:relation}(): MorphMany
+{
+    return \$this->morphMany(${2:RelatedModel}::class, '${3:morphable}');
+}"""
+
+# ─── Controller ───────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "controller"
+body = """<?php
+
+namespace App\\Http\\Controllers;
+
+use Illuminate\\Http\\Request;
+
+class ${1:ControllerName}Controller extends Controller
+{
+    public function index()
+    {
+        ${0}
+    }
+}"""
+
+[[snippets]]
+prefix = "resourcecontroller"
+body = """<?php
+
+namespace App\\Http\\Controllers;
+
+use App\\Models\\${1:Model};
+use Illuminate\\Http\\Request;
+
+class ${1:Model}Controller extends Controller
+{
+    public function index()
+    {
+        return ${1:Model}::all();
+    }
+
+    public function show(${1:Model} \$${2:model})
+    {
+        return \$${2:model};
+    }
+
+    public function store(Request \$request)
+    {
+        \$validated = \$request->validate([
+            ${0}
+        ]);
+
+        return ${1:Model}::create(\$validated);
+    }
+
+    public function update(Request \$request, ${1:Model} \$${2:model})
+    {
+        \$validated = \$request->validate([
+            ${0}
+        ]);
+
+        \$${2:model}->update(\$validated);
+        return \$${2:model};
+    }
+
+    public function destroy(${1:Model} \$${2:model})
+    {
+        \$${2:model}->delete();
+        return response()->noContent();
+    }
+}"""
+
+# ─── Request / Validation ─────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "formrequest"
+body = """<?php
+
+namespace App\\Http\\Requests;
+
+use Illuminate\\Foundation\\Http\\FormRequest;
+
+class ${1:Name}Request extends FormRequest
+{
+    public function authorize(): bool
+    {
+        return ${2:true};
+    }
+
+    public function rules(): array
+    {
+        return [
+            '${3:field}' => ['required', '${4:string}'],
+            ${0}
+        ];
+    }
+}"""
+
+[[snippets]]
+prefix = "validate"
+body = """\$validated = \$request->validate([
+    '${1:field}' => ['required', '${2:string}'],
+    ${0}
+]);"""
+
+[[snippets]]
+prefix = "rulereq"
+body = "'${1:field}' => ['required', '${2:string}'],"
+
+[[snippets]]
+prefix = "rulenull"
+body = "'${1:field}' => ['nullable', '${2:string}'],"
+
+# ─── Routes ───────────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "routeget"
+body = "Route::get('/${1:path}', [${2:Controller}::class, '${3:method}'])->name('${4:name}');"
+
+[[snippets]]
+prefix = "routepost"
+body = "Route::post('/${1:path}', [${2:Controller}::class, '${3:method}'])->name('${4:name}');"
+
+[[snippets]]
+prefix = "routeput"
+body = "Route::put('/${1:path}/{${2:id}}', [${3:Controller}::class, '${4:method}'])->name('${5:name}');"
+
+[[snippets]]
+prefix = "routedelete"
+body = "Route::delete('/${1:path}/{${2:id}}', [${3:Controller}::class, '${4:method}'])->name('${5:name}');"
+
+[[snippets]]
+prefix = "routeresource"
+body = "Route::resource('${1:resource}', ${2:Controller}::class);"
+
+[[snippets]]
+prefix = "routeapiresource"
+body = "Route::apiResource('${1:resource}', ${2:Controller}::class);"
+
+[[snippets]]
+prefix = "routegroup"
+body = """Route::prefix('${1:prefix}')->middleware('${2:auth}')->group(function () {
+    ${0}
+});"""
+
+[[snippets]]
+prefix = "routemiddleware"
+body = "Route::middleware(['${1:auth}'])->group(function () {\n    ${0}\n});"
+
+# ─── Service / Repository ─────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "service"
+body = """<?php
+
+namespace App\\Services;
+
+class ${1:Name}Service
+{
+    public function ${2:handle}(): ${3:void}
+    {
+        ${0}
+    }
+}"""
+
+[[snippets]]
+prefix = "interface"
+body = """<?php
+
+namespace App\\Contracts;
+
+interface ${1:Name}Interface
+{
+    public function ${2:method}(): ${3:void};
+    ${0}
+}"""
+
+# ─── Events / Listeners / Jobs ───────────────────────────────────────────────
+
+[[snippets]]
+prefix = "event"
+body = """<?php
+
+namespace App\\Events;
+
+use Illuminate\\Foundation\\Events\\Dispatchable;
+use Illuminate\\Queue\\SerializesModels;
+
+class ${1:EventName}
+{
+    use Dispatchable, SerializesModels;
+
+    public function __construct(
+        public readonly ${2:mixed} \$${3:payload},
+    ) {}
+}"""
+
+[[snippets]]
+prefix = "listener"
+body = """<?php
+
+namespace App\\Listeners;
+
+use App\\Events\\${1:EventName};
+
+class ${2:ListenerName}
+{
+    public function handle(${1:EventName} \$event): void
+    {
+        ${0}
+    }
+}"""
+
+[[snippets]]
+prefix = "job"
+body = """<?php
+
+namespace App\\Jobs;
+
+use Illuminate\\Bus\\Queueable;
+use Illuminate\\Contracts\\Queue\\ShouldQueue;
+use Illuminate\\Foundation\\Bus\\Dispatchable;
+use Illuminate\\Queue\\InteractsWithQueue;
+use Illuminate\\Queue\\SerializesModels;
+
+class ${1:JobName} implements ShouldQueue
+{
+    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+
+    public function __construct(
+        public readonly ${2:mixed} \$${3:payload},
+    ) {}
+
+    public function handle(): void
+    {
+        ${0}
+    }
+}"""
+
+# ─── Helpers / Facades ───────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "env"
+body = "env('${1:KEY}', ${2:null})"
+
+[[snippets]]
+prefix = "config"
+body = "config('${1:app.name}')"
+
+[[snippets]]
+prefix = "cache"
+body = "Cache::remember('${1:key}', ${2:3600}, function () {\n    return ${0};\n});"
+
+[[snippets]]
+prefix = "cacheforget"
+body = "Cache::forget('${1:key}');"
+
+[[snippets]]
+prefix = "session"
+body = "session('${1:key}', ${2:null})"
+
+[[snippets]]
+prefix = "sessionput"
+body = "session()->put('${1:key}', ${2:\$value});"
+
+[[snippets]]
+prefix = "redirect"
+body = "return redirect()->route('${1:route.name}')${0};"
+
+[[snippets]]
+prefix = "redirectback"
+body = "return back()->withErrors(\$${1:validator})->withInput();"
+
+[[snippets]]
+prefix = "view"
+body = "return view('${1:view.name}', compact('${2:variable}'));"
+
+[[snippets]]
+prefix = "response"
+body = "return response()->json([\n    '${1:key}' => ${2:\$value},\n    ${0}\n], ${3:200});"
+
+[[snippets]]
+prefix = "abort"
+body = "abort(${1:404}, '${2:Not Found}');"
+
+[[snippets]]
+prefix = "dispatch"
+body = "${1:JobName}::dispatch(${2:\$payload});"
+
+[[snippets]]
+prefix = "event"
+body = "event(new ${1:EventName}(${2:\$payload}));"
+
+[[snippets]]
+prefix = "log"
+body = "Log::${1|debug,info,notice,warning,error,critical|}('${2:message}', ${3:[]});"
+
+[[snippets]]
+prefix = "dd"
+body = "dd(${1:\$variable});"
+
+[[snippets]]
+prefix = "dump"
+body = "dump(${1:\$variable});"

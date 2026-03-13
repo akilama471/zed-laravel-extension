@@ -1,12 +1,236 @@
 name = "Blade"
 extensions = [".blade.php"]
 scope = "text.html.php.blade"
-completion_query_characters = ["<", "x", "-"]
+completion_query_characters = ["<", "x", "-", "@"]
+
+# ─── Control Flow ────────────────────────────────────────────────────────────
 
 [[snippets]]
 prefix = "@if"
 body = "@if (${1:condition})\n    ${0}\n@endif"
 
 [[snippets]]
+prefix = "@ifelse"
+body = "@if (${1:condition})\n    ${2}\n@else\n    ${0}\n@endif"
+
+[[snippets]]
+prefix = "@elseif"
+body = "@elseif (${1:condition})\n    ${0}"
+
+[[snippets]]
+prefix = "@unless"
+body = "@unless (${1:condition})\n    ${0}\n@endunless"
+
+[[snippets]]
+prefix = "@isset"
+body = "@isset(${1:\\$variable})\n    ${0}\n@endisset"
+
+[[snippets]]
+prefix = "@empty"
+body = "@empty(${1:\\$variable})\n    ${0}\n@endempty"
+
+# ─── Loops ───────────────────────────────────────────────────────────────────
+
+[[snippets]]
 prefix = "@foreach"
-body = "@foreach (${1:items} as ${2:item})\n    ${0}\n@endforeach"
+body = "@foreach (${1:\\$items} as ${2:\\$item})\n    ${0}\n@endforeach"
+
+[[snippets]]
+prefix = "@forelse"
+body = "@forelse (${1:\\$items} as ${2:\\$item})\n    ${3}\n@empty\n    ${0}\n@endforelse"
+
+[[snippets]]
+prefix = "@for"
+body = "@for (${1:\\$i} = ${2:0}; ${1:\\$i} < ${3:10}; ${1:\\$i}++)\n    ${0}\n@endfor"
+
+[[snippets]]
+prefix = "@while"
+body = "@while (${1:condition})\n    ${0}\n@endwhile"
+
+[[snippets]]
+prefix = "@continue"
+body = "@continue(${1:condition})"
+
+[[snippets]]
+prefix = "@break"
+body = "@break(${1:condition})"
+
+# ─── Switch ──────────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@switch"
+body = "@switch(${1:\\$variable})\n    @case(${2:value})\n        ${3}\n        @break\n    @default\n        ${0}\n@endswitch"
+
+[[snippets]]
+prefix = "@case"
+body = "@case(${1:value})\n    ${0}\n    @break"
+
+# ─── Layout ──────────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@extends"
+body = "@extends('${1:layouts.app}')"
+
+[[snippets]]
+prefix = "@section"
+body = "@section('${1:content}')\n    ${0}\n@endsection"
+
+[[snippets]]
+prefix = "@yield"
+body = "@yield('${1:content}')"
+
+[[snippets]]
+prefix = "@show"
+body = "@show"
+
+[[snippets]]
+prefix = "@parent"
+body = "@parent"
+
+# ─── Includes ────────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@include"
+body = "@include('${1:view.name}')"
+
+[[snippets]]
+prefix = "@includeIf"
+body = "@includeIf('${1:view.name}')"
+
+[[snippets]]
+prefix = "@includeWhen"
+body = "@includeWhen(${1:condition}, '${2:view.name}')"
+
+[[snippets]]
+prefix = "@includeUnless"
+body = "@includeUnless(${1:condition}, '${2:view.name}')"
+
+[[snippets]]
+prefix = "@includeFirst"
+body = "@includeFirst(['${1:view.name}', '${2:fallback.view}'])"
+
+[[snippets]]
+prefix = "@each"
+body = "@each('${1:view.name}', ${2:\\$items}, '${3:item}')"
+
+# ─── Stacks ──────────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@stack"
+body = "@stack('${1:scripts}')"
+
+[[snippets]]
+prefix = "@push"
+body = "@push('${1:scripts}')\n    ${0}\n@endpush"
+
+[[snippets]]
+prefix = "@pushonce"
+body = "@pushonce('${1:scripts}')\n    ${0}\n@endpushonce"
+
+[[snippets]]
+prefix = "@prepend"
+body = "@prepend('${1:scripts}')\n    ${0}\n@endprepend"
+
+# ─── Components ──────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@component"
+body = "@component('${1:components.alert}')\n    @slot('${2:title}')\n        ${3}\n    @endslot\n    ${0}\n@endcomponent"
+
+[[snippets]]
+prefix = "@slot"
+body = "@slot('${1:name}')\n    ${0}\n@endslot"
+
+[[snippets]]
+prefix = "x-component"
+body = "<x-${1:component-name} ${2::attr}=\"${3:value}\">\n    ${0}\n</x-${1:component-name}>"
+
+[[snippets]]
+prefix = "x-self-closing"
+body = "<x-${1:component-name} ${2::attr}=\"${3:value}\" />"
+
+# ─── Auth / Authorisation ────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@auth"
+body = "@auth\n    ${0}\n@endauth"
+
+[[snippets]]
+prefix = "@guest"
+body = "@guest\n    ${0}\n@endguest"
+
+[[snippets]]
+prefix = "@can"
+body = "@can('${1:ability}')\n    ${0}\n@endcan"
+
+[[snippets]]
+prefix = "@cannot"
+body = "@cannot('${1:ability}')\n    ${0}\n@endcannot"
+
+[[snippets]]
+prefix = "@canany"
+body = "@canany(['${1:ability1}', '${2:ability2}'])\n    ${0}\n@endcanany"
+
+# ─── Environment ─────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@env"
+body = "@env('${1:production}')\n    ${0}\n@endenv"
+
+[[snippets]]
+prefix = "@production"
+body = "@production\n    ${0}\n@endproduction"
+
+# ─── Forms ───────────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@csrf"
+body = "@csrf"
+
+[[snippets]]
+prefix = "@method"
+body = "@method('${1:PUT}')"
+
+[[snippets]]
+prefix = "@error"
+body = "@error('${1:field}')\n    <span class=\"error\">{{ ${2:\\$message} }}</span>\n@enderror"
+
+# ─── Livewire / Alpine hints ─────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@livewire"
+body = "@livewire('${1:component-name}')"
+
+[[snippets]]
+prefix = "@livewireStyles"
+body = "@livewireStyles"
+
+[[snippets]]
+prefix = "@livewireScripts"
+body = "@livewireScripts"
+
+# ─── Translations ─────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@lang"
+body = "@lang('${1:messages.key}')"
+
+# ─── Verbatim / Raw ──────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@verbatim"
+body = "@verbatim\n    ${0}\n@endverbatim"
+
+[[snippets]]
+prefix = "@php"
+body = "@php\n    ${0}\n@endphp"
+
+# ─── Vite ────────────────────────────────────────────────────────────────────
+
+[[snippets]]
+prefix = "@vite"
+body = "@vite(['resources/css/app.css', 'resources/js/app.js'])"
+
+[[snippets]]
+prefix = "@viteReactRefresh"
+body = "@viteReactRefresh"

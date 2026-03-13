@@ -3,9 +3,13 @@ name = "Laravel Support"
 version = "0.1.0"
 schema_version = 1
 authors = ["Akila Madhushanka"]
-description = "Laravel tools: Blade syntax, Artisan commands, routes autocomplete"
+description = "Laravel tools: Blade syntax highlighting, Artisan task runner, route & model autocomplete, and PHP language server integration."
 repository = "https://github.com/akilama471/zed-laravel-extension"
 
 [language_servers.laravel-lsp]
 name = "Laravel LSP"
 languages = ["PHP", "Blade"]
+
+[languages.Blade]
+name = "Blade"
+path = "languages/blade"
