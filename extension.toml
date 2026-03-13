@@ -9,7 +9,3 @@ repository = "https://github.com/akilama471/zed-laravel-extension"
 [language_servers.laravel-lsp]
 name = "Laravel LSP"
 languages = ["PHP", "Blade"]
-
-[languages.Blade]
-name = "Blade"
-path = "languages/blade"

@@ -89,7 +89,7 @@ fn collect_controllers(dir: &Path, out: &mut Vec<String>) {
 /// ```
 pub fn extract_fillable(content: &str) -> Vec<String> {
     // Match both single and double quoted strings inside $fillable = [...]
-    let array_re = Regex::new(r"\$fillable\s*=\s*\[([^\]]*)\]").unwrap();
+    let array_re = Regex::new(r#"\$fillable\s*=\s*\[([^\]]*)\]"#).unwrap();
     let string_re = Regex::new(r#"['"]([^'"]+)['"]"#).unwrap();
 
     if let Some(cap) = array_re.captures(content) {
@@ -106,7 +106,7 @@ pub fn extract_fillable(content: &str) -> Vec<String> {
 
 /// Extracts entries from a `$guarded` array in a PHP model file.
 pub fn extract_guarded(content: &str) -> Vec<String> {
-    let array_re = Regex::new(r"\$guarded\s*=\s*\[([^\]]*)\]").unwrap();
+    let array_re = Regex::new(r#"\$guarded\s*=\s*\[([^\]]*)\]"#).unwrap();
     let string_re = Regex::new(r#"['"]([^'"]+)['"]"#).unwrap();
 
     if let Some(cap) = array_re.captures(content) {
@@ -123,7 +123,7 @@ pub fn extract_guarded(content: &str) -> Vec<String> {
 
 /// Extracts entries from a `$casts` array in a PHP model file.
 pub fn extract_cast_keys(content: &str) -> Vec<String> {
-    let array_re = Regex::new(r"\$casts\s*=\s*\[([^\]]*)\]").unwrap();
+    let array_re = Regex::new(r#"\$casts\s*=\s*\[([^\]]*)\]"#).unwrap();
     let key_re = Regex::new(r#"['"]([^'"]+)['"]\s*=>"#).unwrap();
 
     if let Some(cap) = array_re.captures(content) {
@@ -148,7 +148,7 @@ pub fn extract_cast_keys(content: &str) -> Vec<String> {
 /// Route::get(...)->name("profile.edit")
 /// ```
 pub fn extract_routes(content: &str) -> Vec<String> {
-    let re = Regex::new(r"->name\(\s*['\"]([^'\"]+)['\"]\s*\)").unwrap();
+    let re = Regex::new(r#"->name\(\s*['"]([^'"]+)['"]\s*\)"#).unwrap();
     re.captures_iter(content)
         .map(|cap| cap[1].to_string())
         .collect()
@@ -162,10 +162,7 @@ pub fn extract_routes(content: &str) -> Vec<String> {
 /// Route::post('/users/{id}', ...)
 /// ```
 pub fn extract_route_uris(content: &str) -> Vec<String> {
-    let re = Regex::new(
-        r"Route::\w+\(\s*['\"]([^'\"]+)['\"]",
-    )
-    .unwrap();
+    let re = Regex::new(r#"Route::\w+\(\s*['"]([^'"]+)['"]"#).unwrap();
     re.captures_iter(content)
         .map(|cap| cap[1].to_string())
         .collect()
@@ -180,7 +177,7 @@ pub fn extract_route_uris(content: &str) -> Vec<String> {
 /// ```
 /// → `Some("UserController")`
 pub fn extract_class_name(content: &str) -> Option<String> {
-    let re = Regex::new(r"(?m)^\s*(?:abstract\s+|final\s+)?class\s+(\w+)").unwrap();
+    let re = Regex::new(r#"(?m)^\s*(?:abstract\s+|final\s+)?class\s+(\w+)"#).unwrap();
     re.captures(content).map(|cap| cap[1].to_string())
 }
 
@@ -191,7 +188,7 @@ pub fn extract_class_name(content: &str) -> Option<String> {
 /// ```
 /// → `Some("App\\Http\\Controllers")`
 pub fn extract_namespace(content: &str) -> Option<String> {
-    let re = Regex::new(r"(?m)^namespace\s+([\w\\]+)\s*;").unwrap();
+    let re = Regex::new(r#"(?m)^namespace\s+([\w\\]+)\s*;"#).unwrap();
     re.captures(content).map(|cap| cap[1].to_string())
 }
 
