@@ -1,0 +1,19 @@
+[[task]]
+label = "Laravel: Serve"
+command = "php"
+args = ["artisan", "serve"]
+
+[[task]]
+label = "Laravel: Make Controller"
+command = "php"
+args = ["artisan", "make:controller", "${1:ControllerName}"]
+
+[[task]]
+label = "Laravel: Make Model"
+command = "php"
+args = ["artisan", "make:model", "${1:ModelName}"]
+
+[[task]]
+label = "Laravel: Migrate"
+command = "php"
+args = ["artisan", "migrate"]

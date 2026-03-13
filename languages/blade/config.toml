@@ -1,0 +1,11 @@
+name = "Blade"
+extensions = [".blade.php"]
+scope = "text.html.php.blade"
+
+[[snippets]]
+prefix = "@if"
+body = "@if (${1:condition})\n    ${0}\n@endif"
+
+[[snippets]]
+prefix = "@foreach"
+body = "@foreach (${1:items} as ${2:item})\n    ${0}\n@endforeach"

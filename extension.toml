@@ -1,0 +1,9 @@
+id = "laravel-support"
+name = "Laravel Support"
+version = "0.1.0"
+schema_version = 1
+authors = ["Akila Madhushanka"]
+description = "Laravel tools: Blade syntax, Artisan commands, routes autocomplete"
+
+[language_servers.php]
+name = "php"
