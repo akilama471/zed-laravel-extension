@@ -66,10 +66,10 @@ pub static LARAVEL_HELPERS: &[&str] = &[
     "tap",
     "throw_if",
     "throw_unless",
+    "to_route",
     "today",
     "trans",
     "trans_choice",
-    "to_route",
     "url",
     "validator",
     "value",
@@ -123,10 +123,12 @@ pub fn is_laravel_facade(name: &str) -> bool {
 }
 
 /// ─── Blade Directives ─────────────────────────────────────────────────────
+// IMPORTANT: this array MUST remain in strict lexicographic (ASCII) order
+// because `is_blade_directive` uses `binary_search`.
 pub static BLADE_DIRECTIVES: &[&str] = &[
-    "@csrf", "@method", "@yield", "@section", "@show", "@extends", "@include", "@foreach", "@for",
-    "@while", "@if", "@elseif", "@else", "@endif", "@isset", "@empty", "@auth", "@guest",
-    "@switch", "@case", "@break", "@default",
+    "@auth", "@break", "@case", "@csrf", "@default", "@else", "@elseif", "@empty", "@endif",
+    "@extends", "@for", "@foreach", "@guest", "@if", "@include", "@isset", "@method", "@section",
+    "@show", "@switch", "@while", "@yield",
 ];
 
 pub fn is_blade_directive(name: &str) -> bool {

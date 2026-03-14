@@ -1,6 +1,6 @@
 id = "laravel-support"
 name = "Laravel Support"
-version = "0.1.0"
+version = "0.1.1"
 schema_version = 1
 authors = ["Akila Madhushanka <developer.akila5@gmail.com>"]
 description = "Laravel tools: Blade syntax highlighting, Artisan task runner, route & model autocomplete, and PHP language server integration."

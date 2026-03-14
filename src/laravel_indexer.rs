@@ -105,7 +105,7 @@ fn scan_controllers_dir(dir: &Path, out: &mut Vec<String>) {
 
 /// Parses a PHP file and returns all `use Namespace\ClassName;` imports.
 pub fn extract_use_statements(content: &str) -> Vec<String> {
-    let re = Regex::new(r"^use\s+([\w\\]+);").unwrap();
+    let re = Regex::new(r"(?m)^\s*use\s+([\w\\]+);").unwrap();
     re.captures_iter(content)
         .filter_map(|cap| cap[1].split('\\').last().map(|s| s.to_string()))
         .collect()

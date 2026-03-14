@@ -1,47 +1,34 @@
 /// All known Artisan commands shipped with a standard Laravel installation.
+// IMPORTANT: this array MUST remain in strict lexicographic (ASCII) order
+// because `is_artisan_command` uses `binary_search`.
 pub static ARTISAN_COMMANDS: &[&str] = &[
-    // Application
     "about",
-    "completion",
-    "down",
-    "env",
-    "help",
-    "inspire",
-    "list",
-    "migrate",
-    "optimize",
-    "optimize:clear",
-    "serve",
-    "test",
-    "tinker",
-    "up",
-    // Auth
     "auth:clear-resets",
-    // Cache
     "cache:clear",
     "cache:forget",
     "cache:prune-stale-tags",
     "cache:table",
-    // Config
+    "completion",
     "config:cache",
     "config:clear",
     "config:publish",
     "config:show",
-    // Database
     "db",
     "db:monitor",
     "db:seed",
     "db:show",
     "db:table",
     "db:wipe",
-    // Event
+    "down",
+    "env",
     "event:cache",
     "event:clear",
     "event:generate",
     "event:list",
-    // Key
+    "help",
+    "inspire",
     "key:generate",
-    // Make
+    "list",
     "make:cast",
     "make:channel",
     "make:class",
@@ -72,21 +59,19 @@ pub static ARTISAN_COMMANDS: &[&str] = &[
     "make:test",
     "make:trait",
     "make:view",
-    // Migrate
+    "migrate",
     "migrate:fresh",
     "migrate:install",
     "migrate:refresh",
     "migrate:reset",
     "migrate:rollback",
     "migrate:status",
-    // Model
     "model:prune",
     "model:show",
-    // Notification
     "notification:table",
-    // Package
+    "optimize",
+    "optimize:clear",
     "package:discover",
-    // Queue
     "queue:batches-table",
     "queue:clear",
     "queue:failed",
@@ -102,29 +87,25 @@ pub static ARTISAN_COMMANDS: &[&str] = &[
     "queue:retry-batch",
     "queue:table",
     "queue:work",
-    // Route
     "route:cache",
     "route:clear",
     "route:list",
-    // Schedule
     "schedule:clear-cache",
     "schedule:interrupt",
     "schedule:list",
     "schedule:run",
     "schedule:test",
     "schedule:work",
-    // Schema
     "schema:dump",
-    // Session
+    "serve",
     "session:table",
-    // Storage
     "storage:link",
     "storage:unlink",
-    // Stub
     "stub:publish",
-    // Vendor
+    "test",
+    "tinker",
+    "up",
     "vendor:publish",
-    // View
     "view:cache",
     "view:clear",
 ];

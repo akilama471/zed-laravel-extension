@@ -1,6 +1,7 @@
 mod indexer;
 mod scanner;
 
+use std::path::PathBuf;
 use std::sync::Arc;
 use tokio::sync::Mutex;
 use tower_lsp::jsonrpc::Result;
@@ -125,6 +126,9 @@ static LARAVEL_FACADES: &[(&str, &str)] = &[
 struct Backend {
     client: Client,
     index: Arc<Mutex<LaravelIndex>>,
+    /// The workspace root path stored during `initialize` so that `rescan`
+    /// can re-index without receiving `rootUri` a second time.
+    root_path: Arc<Mutex<Option<PathBuf>>>,
 }
 
 // ─── LanguageServer impl ──────────────────────────────────────────────────────
@@ -134,11 +138,13 @@ impl LanguageServer for Backend {
     // ── Lifecycle ─────────────────────────────────────────────────────────
 
     async fn initialize(&self, params: InitializeParams) -> Result<InitializeResult> {
-        // Scan the workspace root so completions are ready on the first request
+        // Scan the workspace root so completions are ready on the first request,
+        // and persist the root path for subsequent re-scans on file save/open.
         if let Some(root_uri) = params.root_uri {
             if let Ok(root_path) = root_uri.to_file_path() {
                 let new_index = scan_laravel_project(&root_path);
                 *self.index.lock().await = new_index;
+                *self.root_path.lock().await = Some(root_path);
                 self.client
                     .log_message(MessageType::INFO, "Laravel LSP: project scanned.")
                     .await;
@@ -178,9 +184,8 @@ impl LanguageServer for Backend {
                     work_done_progress_options: Default::default(),
                     completion_item: None,
                 }),
-                hover_provider: Some(HoverProviderCapability::Simple(true)),
-                // Report definition locations for named routes & Blade components
-                definition_provider: Some(OneOf::Left(true)),
+                // hover_provider and definition_provider are not yet implemented;
+                // do not advertise them to avoid misleading the LSP client.
                 ..Default::default()
             },
         })
@@ -353,24 +358,17 @@ impl LanguageServer for Backend {
 
     // ── Hover ─────────────────────────────────────────────────────────────
 
-    async fn hover(&self, params: HoverParams) -> Result<Option<Hover>> {
-        let pos = params.text_document_position_params;
-        let _ = pos; // Future: read the file and identify the word under cursor
-
-        // Walk the static tables for quick hover documentation
-        // A full implementation would read the document text and find the
-        // word at the cursor position.  That requires document storage which
-        // is beyond the scope of this initial implementation.
+    // hover and goto_definition are not yet implemented and their capabilities
+    // are not advertised in InitializeResult, so these handlers are never called.
+    // They are kept as stubs so the trait impl remains complete.
+    async fn hover(&self, _params: HoverParams) -> Result<Option<Hover>> {
         Ok(None)
     }
-
-    // ── Go-to-definition ──────────────────────────────────────────────────
 
     async fn goto_definition(
         &self,
         _params: GotoDefinitionParams,
     ) -> Result<Option<GotoDefinitionResponse>> {
-        // Future: resolve named routes and Blade components to their source file
         Ok(None)
     }
 }
@@ -382,6 +380,7 @@ impl Backend {
         Backend {
             client,
             index: Arc::new(Mutex::new(LaravelIndex::default())),
+            root_path: Arc::new(Mutex::new(None)),
         }
     }
 
@@ -395,16 +394,23 @@ impl Backend {
             || path.ends_with(".blade.php")
     }
 
-    /// Re-scans the project.  Currently a no-op placeholder because the root
-    /// path is not stored after `initialize`; a production implementation
-    /// would persist it in `Arc<Mutex<Option<PathBuf>>>`.
+    /// Re-scans the project using the root path captured during `initialize`.
     async fn rescan(&self) {
-        self.client
-            .log_message(
-                MessageType::INFO,
-                "Laravel LSP: file changed, re-indexing project.",
-            )
-            .await;
+        let maybe_root = self.root_path.lock().await.clone();
+        if let Some(root) = maybe_root {
+            let new_index = scan_laravel_project(&root);
+            *self.index.lock().await = new_index;
+            self.client
+                .log_message(MessageType::INFO, "Laravel LSP: re-indexed project.")
+                .await;
+        } else {
+            self.client
+                .log_message(
+                    MessageType::WARNING,
+                    "Laravel LSP: rescan requested but root path is unknown.",
+                )
+                .await;
+        }
     }
 }
 
