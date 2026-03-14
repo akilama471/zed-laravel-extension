@@ -5,10 +5,14 @@ path_suffixes = ["php"]
 
 line_comments = ["//"]
 
+# Brackets configuration for Zed editor (if needed)
 brackets = [
-  ["{", "}"],
-  ["[", "]"],
-  ["(", ")"]
+    { start = "{", end = "}", close = true, newline = true },
+    { start = "[", end = "]", close = true, newline = true },
+    { start = "(", end = ")", close = true, newline = true },
+    { start = "\"", end = "\"", close = true, newline = false, not_in = ["string"] },
+    { start = "'", end = "'", close = true, newline = false, not_in = ["string"] },
+    { start = "/*", end = " */", close = true, newline = false, not_in = ["comment", "string"] },
 ]
 
 snippets = "snippets.toml"

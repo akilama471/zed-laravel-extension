@@ -1,0 +1,322 @@
+[
+  {
+    "label": "artisan: serve",
+    "command": "php",
+    "args": ["artisan", "serve"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel", "laravel-serve"]
+  },
+  {
+    "label": "artisan: migrate",
+    "command": "php",
+    "args": ["artisan", "migrate"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel", "laravel-migrate"]
+  },
+  {
+    "label": "artisan: migrate:fresh",
+    "command": "php",
+    "args": ["artisan", "migrate:fresh"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: migrate:fresh --seed",
+    "command": "php",
+    "args": ["artisan", "migrate:fresh", "--seed"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: migrate:rollback",
+    "command": "php",
+    "args": ["artisan", "migrate:rollback"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: migrate:status",
+    "command": "php",
+    "args": ["artisan", "migrate:status"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: db:seed",
+    "command": "php",
+    "args": ["artisan", "db:seed"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: test",
+    "command": "php",
+    "args": ["artisan", "test"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "tags": ["laravel", "laravel-test"]
+  },
+  {
+    "label": "artisan: test --filter $ZED_SYMBOL",
+    "command": "php",
+    "args": ["artisan", "test", "--filter", "$ZED_SYMBOL"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": true,
+    "reveal": "always",
+    "tags": ["laravel", "laravel-test"]
+  },
+  {
+    "label": "artisan: test --parallel",
+    "command": "php",
+    "args": ["artisan", "test", "--parallel"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: queue:work",
+    "command": "php",
+    "args": ["artisan", "queue:work"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel", "laravel-queue"]
+  },
+  {
+    "label": "artisan: queue:listen",
+    "command": "php",
+    "args": ["artisan", "queue:listen"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: schedule:work",
+    "command": "php",
+    "args": ["artisan", "schedule:work"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: schedule:run",
+    "command": "php",
+    "args": ["artisan", "schedule:run"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: tinker",
+    "command": "php",
+    "args": ["artisan", "tinker"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": true,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: route:list",
+    "command": "php",
+    "args": ["artisan", "route:list"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: route:cache",
+    "command": "php",
+    "args": ["artisan", "route:cache"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: route:clear",
+    "command": "php",
+    "args": ["artisan", "route:clear"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: cache:clear",
+    "command": "php",
+    "args": ["artisan", "cache:clear"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: config:cache",
+    "command": "php",
+    "args": ["artisan", "config:cache"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: config:clear",
+    "command": "php",
+    "args": ["artisan", "config:clear"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: view:cache",
+    "command": "php",
+    "args": ["artisan", "view:cache"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: view:clear",
+    "command": "php",
+    "args": ["artisan", "view:clear"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: optimize",
+    "command": "php",
+    "args": ["artisan", "optimize"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: optimize:clear",
+    "command": "php",
+    "args": ["artisan", "optimize:clear"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: key:generate",
+    "command": "php",
+    "args": ["artisan", "key:generate"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: storage:link",
+    "command": "php",
+    "args": ["artisan", "storage:link"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: vendor:publish",
+    "command": "php",
+    "args": ["artisan", "vendor:publish"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: down",
+    "command": "php",
+    "args": ["artisan", "down"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: up",
+    "command": "php",
+    "args": ["artisan", "up"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: about",
+    "command": "php",
+    "args": ["artisan", "about"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  },
+  {
+    "label": "artisan: list",
+    "command": "php",
+    "args": ["artisan", "list"],
+    "cwd": "$ZED_WORKTREE_ROOT",
+    "use_new_terminal": false,
+    "allow_concurrent_runs": false,
+    "reveal": "always",
+    "tags": ["laravel"]
+  }
+]

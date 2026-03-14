@@ -1,8 +1,28 @@
 name = "Blade"
-grammar = "html"
+grammar = "blade"
 
-scope = "text.html.php.blade"
 path_suffixes = ["blade.php"]
 completion_query_characters = ["<", "x", "-", "@"]
-
 snippets = "snippets.toml"
+
+block_comment = ["{{-- ", " --}}"]
+autoclose_before = ";:.,=}])>"
+brackets = [
+    { start = "{", end = "}", close = true, newline = true },
+    { start = "[", end = "]", close = true, newline = true },
+    { start = "(", end = ")", close = true, newline = true },
+    { start = "\"", end = "\"", close = true, newline = false, not_in = [
+        "string",
+    ] },
+    { start = "'", end = "'", close = true, newline = false, not_in = [
+        "string",
+    ] },
+]
+wrap_characters = { start_prefix = "<", start_suffix = ">", end_prefix = "</", end_suffix = ">" }
+scope_opt_in_language_servers = ["tailwindcss-language-server"]
+prettier_plugins = ["@shufo/prettier-plugin-blade"]
+prettier_parser_name = "blade"
+
+[overrides.string]
+completion_query_characters = ["-"]
+opt_into_language_servers = ["tailwindcss-language-server"]
