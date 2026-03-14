@@ -1,0 +1,19 @@
+name = "PHP"
+grammar = "php"
+
+path_suffixes = ["php"]
+
+line_comments = ["//"]
+
+brackets = [
+  ["{", "}"],
+  ["[", "]"],
+  ["(", ")"]
+]
+
+snippets = "snippets.toml"
+
+[language_servers.intelephense]
+name = "Intelephense"
+command = "intelephense"
+args = ["--stdio"]

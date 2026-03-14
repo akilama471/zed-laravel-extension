@@ -61,13 +61,24 @@ impl zed::Extension for LaravelExtension {
 
         // Fall back to intelephense – the best general-purpose PHP LSP that
         // also understands Laravel patterns through its stub library.
-        let server_path = self.ensure_intelephense(language_server_id)?;
+        //let server_path = self.ensure_intelephense(language_server_id)?;
 
-        Ok(zed::Command {
-            command: zed::node_binary_path()?,
-            args: vec![server_path, "--stdio".to_string()],
-            env: Default::default(),
-        })
+        match self.ensure_intelephense(language_server_id) {
+            Ok(server_path) => Ok(zed::Command {
+                command: zed::node_binary_path()?,
+                args: vec![server_path, "--stdio".to_string()],
+                env: Default::default(),
+            }),
+            Err(err) => {
+                eprintln!("⚠ Could not start PHP language server: {}", err);
+                // Return a dummy command that does nothing
+                Ok(zed::Command {
+                    command: "true".to_string(), // Linux/macOS: does nothing
+                    args: vec![],
+                    env: Default::default(),
+                })
+            }
+        }
     }
 
     // ── Initialisation options (sent once on server start) ────────────────
@@ -330,11 +341,27 @@ impl LaravelExtension {
             zed::npm_install_package(INTELEPHENSE_PACKAGE, &latest)?;
         }
 
+        // ── Build absolute path ────────────────────────────────────────────
+        // Node.js is spawned with the project root as its CWD, so passing a
+        // bare relative path causes it to look inside the *project* directory
+        // rather than the extension's work directory where npm installed the
+        // package.  `std::env::current_dir()` inside the Zed WASM sandbox
+        // returns the extension's actual work directory on disk, giving us a
+        // fully-qualified path that Node.js can always resolve correctly.
+        let server_path = std::env::current_dir()
+            .ok()
+            .map(|cwd| {
+                cwd.join(INTELEPHENSE_SERVER_PATH)
+                    .to_string_lossy()
+                    .into_owned()
+            })
+            .unwrap_or_else(|| INTELEPHENSE_SERVER_PATH.to_string());
+
         // ── Verify the script exists ───────────────────────────────────────
-        if !std::path::Path::new(INTELEPHENSE_SERVER_PATH).exists() {
+        if !std::path::Path::new(&server_path).exists() {
             return Err(format!(
                 "intelephense script not found at '{}' after installation",
-                INTELEPHENSE_SERVER_PATH
+                server_path
             ));
         }
 
@@ -343,8 +370,8 @@ impl LaravelExtension {
             &zed::LanguageServerInstallationStatus::None,
         );
 
-        self.cached_server_path = Some(INTELEPHENSE_SERVER_PATH.to_string());
-        Ok(INTELEPHENSE_SERVER_PATH.to_string())
+        self.cached_server_path = Some(server_path.clone());
+        Ok(server_path)
     }
 }
 
